@@ -6,7 +6,7 @@
 ## Encoder
 ### For Input
 - [ ] Embeddings
-- [ ] Positional Encoding
+- [x] Positional Encoding
 ### For Encoder Layer
 - [x] Multihead Attention
 - [ ] Feed Forward Neural Network
@@ -15,10 +15,10 @@
 ## Decoder
 ### For Input
 - [ ] Embeddings
-- [ ] Positional Encoding
+- [x] Positional Encoding
 ### For Decoder Layer
 - [x] Masked Multi Head Attention
-- [ ] Cross Encoding
+- [x] Cross Attention
 - [ ] Feed Forward Nerual Network
 - [ ] Add and Normalize
 
