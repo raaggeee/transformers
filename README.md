@@ -17,7 +17,7 @@
 - [ ] Embeddings
 - [ ] Positional Encoding
 ### For Decoder Layer
-- [ ] Masked Multi Head Attention
+- [x] Masked Multi Head Attention
 - [ ] Cross Encoding
 - [ ] Feed Forward Nerual Network
 - [ ] Add and Normalize
