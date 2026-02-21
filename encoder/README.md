@@ -1,5 +1,6 @@
 ## Encoder and its components
-<img width="326" height="552" alt="Screenshot 2026-02-21 at 6 10 43 PM" src="https://github.com/user-attachments/assets/e20b69f0-870c-49ee-9924-d024b5efbe34" />
+<img width="326" height="552" alt="image" src="https://github.com/user-attachments/assets/d37a789f-87fe-4d1f-9274-2972f24a77be" />
+
 
 ## About Encoder Layer
 Encoder layer is used to understand the contextual relationship between the words.
@@ -14,3 +15,4 @@ Encoder layer is used to understand the contextual relationship between the word
 
 ## Output
 Encoder layer gives 2 outputs to the decoder. The Key and Value of current input embeddings.
+
