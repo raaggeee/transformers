@@ -4,16 +4,16 @@ import math
 import torch
 
 class MultiHeadAttention(nn.Module):
-    def __init__(self, hidden_dims = 6, heads=3):
+    def __init__(self, d_model = 6, heads=3):
         super().__init__()
-        self.Wq = nn.Linear(hidden_dims, hidden_dims, bias=False)
-        self.Wv = nn.Linear(hidden_dims, hidden_dims, bias=False)
-        self.Wk = nn.Linear(hidden_dims, hidden_dims, bias=False)
-        self.Wo = nn.Linear(hidden_dims, hidden_dims, bias=False)
-        assert hidden_dims % heads == 0
-        self.hidden_dims = hidden_dims
+        self.Wq = nn.Linear(d_model, d_model, bias=False)
+        self.Wv = nn.Linear(d_model, d_model, bias=False)
+        self.Wk = nn.Linear(d_model, d_model, bias=False)
+        self.Wo = nn.Linear(d_model, d_model, bias=False)
+        assert d_model % heads == 0
+        self.hidden_dims = d_model
         self.heads = heads
-        self.d_k = hidden_dims//heads
+        self.d_k = d_model//heads
 
     def scaled_dot_product_attention(self, q, k, v, mask):
         dims_k = k.shape[-1]

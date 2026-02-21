@@ -22,4 +22,7 @@
 - [ ] Feed Forward Nerual Network
 - [ ] Add and Normalize
 
-## Reference https://medium.com/data-science/a-complete-guide-to-write-your-own-transformers-29e23f371ddd
+## Reference 
+1. https://medium.com/data-science/a-complete-guide-to-write-your-own-transformers-29e23f371ddd
+2. https://medium.com/@hunter-j-phillips/positional-encoding-7a93db4109e6
+
