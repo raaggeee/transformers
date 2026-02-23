@@ -4,6 +4,9 @@ import torch.nn.functional as F
 import math
 
 class InputEmbeddings(nn.Module):
+    """
+    x: 
+    """
     def __init__(self, d_model, vocab_size):
         super().__init__()
         self.embeddings = nn.Embedding(vocab_size, d_model)
