@@ -40,6 +40,7 @@ class PositionalEncodingV1(nn.Module):
 #v2
 class PositionalencodingV2(nn.Module):
     def __init__(self, d_model, max_length=5000):
+        self.dropout = nn.Dropout(p=0.1)
         #init 0s matrix
         pe = torch.zeros(max_length, d_model)
 
@@ -60,6 +61,6 @@ class PositionalencodingV2(nn.Module):
 
     def forward(self, x):
         x = x + self.pe[:, :x.size(1)].requires_grad(False)
-        return x
+        return self.dropout(x)
 
         

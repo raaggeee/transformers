@@ -14,12 +14,14 @@ class MultiHeadAttention(nn.Module):
         self.hidden_dims = d_model
         self.heads = heads
         self.d_k = d_model//heads
+        self.dropout = nn.Dropout(p=0.1)
 
     def scaled_dot_product_attention(self, q, k, v, mask):
         dims_k = k.shape[-1]
 
         # attention = torch.matmul(q, k.transpose(-2, -1))
         attention = (q @ k.transpose(-2, -1)/math.sqrt(dims_k))
+        attention = self.dropout(attention)
 
         if mask is not None:
             fill_val = -float("inf")
@@ -35,7 +37,6 @@ class MultiHeadAttention(nn.Module):
         q = self.Wq(q)
         k = self.Wk(k)
         v = self.Wv(v)
-        print(q.shape)
 
         q = q.view(q.shape[0], q.shape[1], self.heads, self.d_k).transpose(1, 2) 
         k = k.view(k.shape[0], k.shape[1], self.heads, self.d_k).transpose(1, 2)
