@@ -21,13 +21,13 @@ class EncoderBlock(nn.Module):
         self.self_attention = MultiHeadAttention(self.d_model, self.heads)
         self.feed_forward = FeedForwardNN(self.d_model)
 
-    def forward(self, input_embeds):
-        "input_embeds: it can be either input+pos embeddings or previous encoding layer output"
-        attention_output = self.self_attention.forward(input_embeds, 
-                                                        input_embeds, 
-                                                        input_embeds,
-                                                        mask=False)
-        add_and_norm = self.residual1.forward(input_embeds, attention_output)
+    def forward(self, x, mask):
+        "x: it can be either input+pos embeddings or previous encoding layer output"
+        attention_output = self.self_attention.forward(x, 
+                                                        x, 
+                                                        x,
+                                                        mask)
+        add_and_norm = self.residual1.forward(x, attention_output)
 
         feed_forward_output = self.feed_forward.forward(add_and_norm)
         add_and_norm = self.residual2.forward(add_and_norm, feed_forward_output)

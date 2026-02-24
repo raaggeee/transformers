@@ -21,19 +21,19 @@ class MultiHeadAttention(nn.Module):
 
         # attention = torch.matmul(q, k.transpose(-2, -1))
         attention = (q @ k.transpose(-2, -1)/math.sqrt(dims_k))
-        attention = self.dropout(attention)
 
         if mask is not None:
             fill_val = -float("inf")
             attention.masked_fill_(mask==0, fill_val)
             
         scaled_qk = F.softmax(attention)
+        attn = self.dropout(scaled_qk)
 
-        scaled_attention = torch.matmul(scaled_qk, v)
+        scaled_attention = torch.matmul(attn, v)
         
         return scaled_attention
     
-    def forward(self, q, k, v, mask=False): #this is also done for cross attention
+    def forward(self, q, k, v, mask=None): #this is also done for cross attention
         q = self.Wq(q)
         k = self.Wk(k)
         v = self.Wv(v)
