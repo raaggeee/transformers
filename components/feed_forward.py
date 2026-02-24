@@ -11,6 +11,6 @@ class FeedForwardNN(nn.Module):
         self.dropout = nn.Dropout(p=0.1)
 
     def forward(self, x):
-        hidden = nn.ReLU(self.input_layer(x))
+        hidden = F.ReLU(self.input_layer(x))
         output = self.output_layer(self.dropout(hidden))
         return output

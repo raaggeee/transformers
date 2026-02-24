@@ -12,21 +12,25 @@ from components.residual_connection import Residual
 
 class EncoderBlock(nn.Module):
     def __init__(self, vocab_size, d_model=256, heads=4):
+        super().__init__()
         self.vocab_size = vocab_size
         self.d_model = d_model
         self.heads = heads
-        self.residual = Residual(self.d_model)
+        self.residual1 = Residual(self.d_model)
+        self.residual1 = Residual(self.d_model)
+        self.self_attention = MultiHeadAttention(self.d_model, self.heads)
+        self.feed_forward = FeedForwardNN(self.d_model)
 
     def forward(self, input_embeds):
         "input_embeds: it can be either input+pos embeddings or previous encoding layer output"
-        attention_output = MultiHeadAttention(self.d_model, self.heads).forward(input_embeds, 
-                                                                                input_embeds, 
-                                                                                input_embeds,
-                                                                                mask=False)
-        add_and_norm = self.residual.forward(input_embeds, attention_output)
+        attention_output = self.self_attention.forward(input_embeds, 
+                                                        input_embeds, 
+                                                        input_embeds,
+                                                        mask=False)
+        add_and_norm = self.residual1.forward(input_embeds, attention_output)
 
-        feed_forward_output = FeedForwardNN(self.d_model).forward(add_and_norm)
-        add_and_norm = self.residual.forward(add_and_norm, feed_forward_output)
+        feed_forward_output = self.feed_forward.forward(add_and_norm)
+        add_and_norm = self.residual2.forward(add_and_norm, feed_forward_output)
 
         return add_and_norm
 
