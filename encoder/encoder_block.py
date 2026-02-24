@@ -15,16 +15,18 @@ class EncoderBlock(nn.Module):
         self.vocab_size = vocab_size
         self.d_model = d_model
         self.heads = heads
+        self.residual = Residual(self.d_model)
 
-    def forward(self, x):
-        "x: it can be either input+pos embeddings or previous encoding layer output"
-        attention_output = MultiHeadAttention(self.d_model, self.heads).forward(x, x, x, mask=False)
-        add_and_norm = Residual(self.d_model).forward(x, attention_output)
+    def forward(self, input_embeds):
+        "input_embeds: it can be either input+pos embeddings or previous encoding layer output"
+        attention_output = MultiHeadAttention(self.d_model, self.heads).forward(input_embeds, 
+                                                                                input_embeds, 
+                                                                                input_embeds,
+                                                                                mask=False)
+        add_and_norm = self.residual.forward(input_embeds, attention_output)
 
         feed_forward_output = FeedForwardNN(self.d_model).forward(add_and_norm)
-        add_and_norm = Residual(self.d_model).forward(add_and_norm, feed_forward_output)
+        add_and_norm = self.residual.forward(add_and_norm, feed_forward_output)
 
         return add_and_norm
-    
-
 
