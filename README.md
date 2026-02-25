@@ -5,22 +5,25 @@
 ## Layers
 ## Encoder
 ### For Input
-- [ ] Embeddings
+- [x] Embeddings
 - [x] Positional Encoding
 ### For Encoder Layer
 - [x] Multihead Attention
-- [ ] Feed Forward Neural Network
-- [ ] Add and Normalize
+- [x] Feed Forward Neural Network
+- [x] Add and Normalize
 
 ## Decoder
 ### For Input
-- [ ] Embeddings
+- [x] Embeddings
 - [x] Positional Encoding
 ### For Decoder Layer
 - [x] Masked Multi Head Attention
 - [x] Cross Attention
-- [ ] Feed Forward Nerual Network
-- [ ] Add and Normalize
+- [x] Feed Forward Nerual Network
+- [x] Add and Normalize
+
+## Transformers Architecture 
+- [ ] Training Loop
 
 ## Reference 
 1. https://medium.com/data-science/a-complete-guide-to-write-your-own-transformers-29e23f371ddd
