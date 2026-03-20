@@ -1,6 +1,5 @@
 import torch.nn as nn
 import torch.nn.functional as F
-from decoder.decoder_block import EncoderBlock
 from components.layer_normalization import LayerNormalization
 
 class Encoder(nn.Module):

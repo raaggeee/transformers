@@ -14,26 +14,28 @@ from components.feed_forward import FeedForwardNN
 
 class Transformers(nn.Module):
     def __init__(self, encoder: Encoder, decoder: Decoder, 
-                 src_embeds: InputEmbeddings, pos_embeds: InputEmbeddings,
-                 src_tgt: PositionalencodingV2, pos_tgt: PositionalencodingV2, proj: Projection):
+                 src_embeds: InputEmbeddings, tgt_embeds: InputEmbeddings,
+                 src_pos: PositionalencodingV2, tgt_pos: PositionalencodingV2, proj: Projection):
+        super().__init__()
 
-        self.encoder = encoder
+        self.encoder = encoder  
         self.decoder = decoder
         self.src_embeds = src_embeds
-        self.pos_embeds = pos_embeds
-        self.src_tgt = src_tgt
-        self.pos_tgt = pos_tgt
+        self.tgt_embeds = tgt_embeds
+        self.src_pos = src_pos
+        self.tgt_pos = tgt_pos
         self.proj = proj
 
-    def encoder(self, src, src_emebds):
+    def encode(self, src, src_mask):
+        print(src.dtype)
         src = self.src_embeds(src)
-        src = self.pos_embeds(src)
-        return self.encoder(src, self.src_embeds)
+        src = self.src_pos(src)
+        return self.encoder(src, src_mask)
 
-    def decoder(self, encoder_output: torch.Tensor, src_mask: torch.Tensor, tgt: torch.Tensor, tgt_mask: torch.Tensor):
-        tgt = self.src_embeds(tgt)
-        tgt = self.pos_embeds(tgt)
-        return self.decoder()
+    def decode(self, encoder_output: torch.Tensor, src_mask: torch.Tensor, tgt: torch.Tensor, tgt_mask: torch.Tensor):
+        tgt = self.tgt_embeds(tgt)
+        tgt = self.tgt_pos(tgt)
+        return self.decoder(encoder_output, src_mask, tgt, tgt_mask)
 
     def project(self, x):
         return self.proj(x)
@@ -62,7 +64,7 @@ def build_transformers(src_vocab_size: int, tgt_vocab_size: int, src_seq: int,
 
     proj_layer = Projection(d_model, tgt_vocab_size)
 
-    transformers = Transformers(encoder, decoder, src_embeds, src_pos, tgt_embeds, tgt_pos, proj_layer)
+    transformers = Transformers(encoder, decoder, src_embeds, tgt_embeds, src_pos, tgt_pos, proj_layer)
 
     #for weight initialization of Weights layer
     for p in transformers.parameters():

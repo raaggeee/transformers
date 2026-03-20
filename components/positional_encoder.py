@@ -10,6 +10,7 @@ class PositionalEncodingV1(nn.Module):
     the most inefficient approach
     """
     def __init__(self, d_model):
+        super().__init__()
         self.d_model = d_model
 
     def calculate_positions(self, embeds):
@@ -40,6 +41,7 @@ class PositionalEncodingV1(nn.Module):
 #v2
 class PositionalencodingV2(nn.Module):
     def __init__(self, d_model, max_length=5000):
+        super().__init__()
         self.dropout = nn.Dropout(p=0.1)
         #init 0s matrix
         pe = torch.zeros(max_length, d_model)
@@ -60,7 +62,7 @@ class PositionalencodingV2(nn.Module):
         self.pe = pe
 
     def forward(self, x):
-        x = x + self.pe[:, :x.size(1)].requires_grad(False)
+        x = x + self.pe[:, :x.shape[1], :].requires_grad_(False)
         return self.dropout(x)
 
         

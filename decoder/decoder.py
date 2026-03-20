@@ -11,6 +11,6 @@ class Decoder(nn.Module):
 
     def forward(self, encoder_output, x, mask, tgt_mask):
         for layer in self.layers:
-            x = layer(x, encoder_output, x, mask, tgt_mask)
+            x = layer(x, encoder_output, mask, tgt_mask)
         return self.norm(x)
     

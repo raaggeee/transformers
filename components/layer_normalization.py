@@ -6,8 +6,8 @@ import math
 class LayerNormalization(nn.Module):
     def __init__(self, d_model, eps:float=10**-6):
         super().__init__()
-        self.thetha = nn.Parameter(torch.ones(d_model))
-        self.beta = nn.Parameter(torch.zeros(d_model))
+        self.alpha = nn.Parameter(torch.ones(d_model))
+        self.bias = nn.Parameter(torch.zeros(d_model))
         self.eps = eps
 
     def forward(self, x):
@@ -16,7 +16,7 @@ class LayerNormalization(nn.Module):
 
         layer_norm = ((x - mu)/(var + self.eps))
 
-        return self.alpha(layer_norm) + self.bias
+        return self.alpha * layer_norm + self.bias
 
        
     

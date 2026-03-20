@@ -3,17 +3,18 @@ from pathlib import Path
 def get_config():
     return {
         "batch_size": 4, 
-        "num_epochs": 20,
+        "num_epochs": 2,
         "lr": 10 ** -4,
         "seq": 350,
         "d_model": 512,
-        "datasource": "",
-        "lang_src": "it",
-        "model_folder": "",
-        "model_basename": "",
+        "datasource": "opus_books",
+        "lang_src": "en",
+        "lang_tgt": "it",
+        "model_folder": "weights",
+        "model_basename": "tmodel_",
         "preload": "latest",
-        "tokenizer_file": "",
-        "exp_name": ""
+        "tokenizer_file": "tokenizer_{0}.json",
+        "exp_name": "runs/tmodel"
     }
 
 def get_weights_file_path(config, epochs: str):

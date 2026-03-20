@@ -19,24 +19,13 @@ class DecoderBlock(nn.Module):
         self.cross_attention = MultiHeadAttention(self.d_model, self.heads)
         self.feed_forward = FeedForwardNN(self.d_model)
 
-    def forward(self, encoder_output, input_embeds, mask, tgt_mask):
+    def forward(self, encoder_output, x, mask, tgt_mask):
         """
         encoder_output: Used for K and V values for cross attention
         input_embeds: It is the predicted output.
         """
-        attention_output = self.self_attention.forward(input_embeds,
-                                                        input_embeds,
-                                                        input_embeds,
-                                                        mask)
-        attention_add_and_norm = self.residual1.forward(input_embeds, attention_output)
-
-        cross_attention_output = self.cross_attention\
-        .forward(attention_add_and_norm, encoder_output, encoder_output, tgt_mask)
-        cross_attention_add_and_norm =self.residual2.forward(attention_add_and_norm, 
-                                                            cross_attention_output)
-
-        feed_forward = self.feed_forward.forward(cross_attention_add_and_norm)
-        add_and_norm = self.residual3.forward(cross_attention_add_and_norm, feed_forward)
-
-        return add_and_norm
+        x = self.residual1(x, lambda x: self.self_attention(x, x, x, tgt_mask))
+        x = self.residual2(x, lambda x: self.cross_attention(x, encoder_output, encoder_output, mask))
+        x = self.residual3(x, self.feed_forward)
+        return x
 
